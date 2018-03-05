@@ -7,33 +7,35 @@ namespace BinarySearch
         public static int BinarySearch(int[] array, int value)
 
         {
-            //Array.Sort(array);
-            //код поиска значения value в массиве array
             if (array.Length == 0 || value < array[0] || value > array[array.Length - 1])
             {
                 return -1;
             }
 
-            var idFirst = 0;
-            var idLast = array.Length;
+            var indFirst = 0;
+            var indLast = array.Length - 1;
 
-            while (idFirst < idLast)
+            while ((indFirst < indLast) & array[indFirst] != value & array[indLast] != value)
             {
-                int idMiddle = idFirst + (idLast - idFirst) / 2;
+                var indMiddle = indFirst + (indLast - indFirst) / 2;
 
-                if (value <= array[idMiddle])
+                if (value >= array[indMiddle])
                 {
-                    idLast = idMiddle;
+                    indFirst = indMiddle;
                 }
                 else
                 {
-                    idFirst = idMiddle;
+                    indLast = indMiddle;
                 }
             }
 
-            if (array[idLast] == value)
+            if (array[indFirst] == value)
             {
-                return idLast;
+                return indFirst;
+            }
+            else if (array[indLast] == value)
+            {
+                return indLast;
             }
             else
             {
@@ -43,21 +45,26 @@ namespace BinarySearch
 
 
         static void Main(string[] args)
-
         {
             TestNonExistentElement();
-            TestArrayOfFiveElements();
             TestNegativeNumbers();
+            TestArrayOfFiveElements();
+            TestEmptyArray();
+            TestRepeatingValue();
+            TestSearchBigArray();
+
             Console.ReadKey();
         }
 
-
+        /// <summary>
+        /// Тестирование поиска в отрицательных числах
+        /// </summary>
         private static void TestNegativeNumbers()
-
         {
-            //Тестирование поиска в отрицательных числах
 
             int[] negativeNumbers = new[] {-5, -4, -3, -2};
+
+            Array.Sort(negativeNumbers);
 
             if (BinarySearch(negativeNumbers, -3) != 2)
 
@@ -68,27 +75,33 @@ namespace BinarySearch
                 Console.WriteLine("Поиск среди отрицательных чисел работает корректно");
         }
 
+        /// <summary>
+        /// Тестирование поиска отсутствующего элемента
+        /// </summary>
         private static void TestNonExistentElement()
-
-        {
-            //Тестирование поиска отсутствующего элемента
-
+        {            
             int[] negativeNumbers = new[] {-5, -4, -3, -2};
 
+            Array.Sort(negativeNumbers);
+                     
             if (BinarySearch(negativeNumbers, -1) >= 0)
 
-                Console.WriteLine("! Поиск нашёл число -1 среди чисел {-5, -4, -3, -2}");
+                Console.WriteLine("!Поиск нашёл число -1 среди чисел {-5, -4, -3, -2}");
 
             else
 
-                Console.WriteLine("Поиск отсутствующего элемента вернул корректный результат работает корректно");
+                Console.WriteLine("Поиск отсутствующего элемента вернул корректный результат");
         }
 
+        /// <summary>
+        /// Тестирование поиска в массиве из пяти элементов
+        /// </summary>
         private static void TestArrayOfFiveElements()
         {
-            //Тестирование поиска в массиве из пяти элементов
-            
+                       
             int[] fiveElements = new[] { 0, 4, 88, 90, 100};
+
+            Array.Sort(fiveElements);
 
             if (BinarySearch(fiveElements, 90) == 3)
 
@@ -98,6 +111,70 @@ namespace BinarySearch
 
                 Console.WriteLine("! Поиск не нашёл число 90 среди чисел { 0, 4, 88, 90, 100}");
 
+        }
+        
+        /// <summary>
+        /// Тест поиска в пустом массиве
+        /// </summary>
+        private static void TestEmptyArray()
+        {
+            int[] emptyArray = new int[] { };
+
+            if (BinarySearch(emptyArray, 1) == -1)
+            {
+                Console.WriteLine("Поиск в пустом массиве работает корректно");
+            }
+            else
+            {
+                Console.WriteLine("!Поиск нашёл ", 1, " в пустом массиве");
+            }
+        }
+
+        /// <summary>
+        /// Тест поиска повторяющегося значения
+        /// </summary>
+        private static void TestRepeatingValue()
+        {
+            int[] repeatingValue = new[] { 0, 1, 3, 3, 3, 4 };
+
+            Array.Sort(repeatingValue);
+
+            if (BinarySearch(repeatingValue, 3) == -1)
+            {
+                Console.WriteLine("!Поиск повторяющегося элемента работает некорректно");
+            }
+            else
+            {
+                Console.WriteLine("Поиск повторяющегося элемента работает корректно");
+            }
+        }
+
+        /// <summary>
+        /// Тест поиска в большом массиве
+        /// </summary>
+        private static void TestSearchBigArray()
+        {
+            Random random = new Random();
+
+            int[] bigArray = new int[100001];
+
+            for (int i = 0; i<100001; i++)
+            {
+                bigArray[i] = random.Next();
+            }
+
+            var value = bigArray[0];
+
+            Array.Sort(bigArray);
+
+            if (BinarySearch(bigArray, value) == -1)
+            {
+                Console.WriteLine("!Поиск в большом массиве работает не корректно");
+            }
+            else
+            {
+                Console.WriteLine("Поиск в большом массиве работает корректно");
+            }
         }
     }
 }
