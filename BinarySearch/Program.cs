@@ -120,13 +120,13 @@ namespace BinarySearch
         {
             int[] emptyArray = new int[] { };
 
-            if (BinarySearch(emptyArray, 1) == -1)
+            if (BinarySearch(emptyArray, 1) >= 0)
             {
-                Console.WriteLine("Поиск в пустом массиве работает корректно");
+                Console.WriteLine("!Поиск нашёл ", 1, " в пустом массиве");
             }
             else
             {
-                Console.WriteLine("!Поиск нашёл ", 1, " в пустом массиве");
+                Console.WriteLine("Поиск в пустом массиве работает корректно");
             }
         }
 
