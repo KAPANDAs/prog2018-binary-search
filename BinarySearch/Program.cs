@@ -160,20 +160,18 @@ namespace BinarySearch
 
             for (int i = 0; i<100001; i++)
             {
-                bigArray[i] = random.Next();
+                bigArray[i] = i;
             }
 
-            var value = bigArray[0];
+            var value = 1456;
 
-            Array.Sort(bigArray);
-
-            if (BinarySearch(bigArray, value) == -1)
+            if (BinarySearch(bigArray, value) == 1456)
             {
-                Console.WriteLine("!Поиск в большом массиве работает не корректно");
+                Console.WriteLine("!Поиск в большом массиве работает корректно");
             }
             else
             {
-                Console.WriteLine("Поиск в большом массиве работает корректно");
+                Console.WriteLine("Поиск в большом массиве работает не корректно");
             }
         }
     }
